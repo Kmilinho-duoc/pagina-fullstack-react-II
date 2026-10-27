@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Pacifico&display=swap');
+
+
+:root {
+    --color-fondo: #FFF5E1;        
+    --color-texto: #5D4037;        
+    --color-acento-1: #8B4513;     
+    --color-acento-2: #FFC0CB;     
+    --color-blanco: #FFFFFF;
+}
+
+body {
+    font-family: 'Lato', sans-serif; 
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+}
+
+.font-heading {
+    font-family: 'Pacifico', cursive; 
+    color: var(--color-acento-1);
+}
+
+
+.sub-nav {
+    background-color: var(--color-acento-2); 
+    font-size: 0.9rem;
+}
+.sub-nav a {
+    text-decoration: none;
+    color: var(--color-texto);
+    font-weight: 700;
+}
+.sub-nav a:hover {
+    color: var(--color-acento-1);
+}
+
+
+.navbar {
+    background-color: var(--color-blanco);
+    border-bottom: 1px solid #f0e0c8;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+}
+
+.nav-link {
+    color: var(--color-texto);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 0 0.5rem;
+}
+.nav-link.active, .nav-link:hover {
+    color: var(--color-acento-1);
+}
+
+.btn-cart {
+    color: var(--color-acento-1);
+    border: 2px solid var(--color-acento-1);
+    font-weight: 700;
+}
+.btn-cart:hover {
+    background-color: var(--color-acento-1);
+    color: white;
+}
+
+
+.btn-primary {
+    background-color: var(--color-acento-1);
+    border-color: var(--color-acento-1);
+    color: var(--color-blanco); 
+    font-weight: 700;
+}
+.btn-primary:hover {
+    background-color: #6d360f; 
+    border-color: #6d360f;
+    color: var(--color-blanco);
+}
+
+
+.card {
+    background-color: var(--color-blanco); 
+    border: 1px solid #f0e0c8;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+.card-title {
+    color: var(--color-texto);
+    font-weight: 700;
+}
+.card-footer {
+    background-color: #faf6f0; 
+    border-top: 1px solid #f0e0c8;
+}
+.price-text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-acento-1);
+}
+
+
+.footer-mil-sabores {
+    background-color: #f7e9d1; 
+    color: var(--color-texto);
+    border-top: 2px solid #f0e0c8;
+}
+.footer-mil-sabores h5 {
+    font-weight: 700;
+    color: var(--color-acento-1);
+}
+.footer-mil-sabores a {
+    text-decoration: none;
+    color: var(--color-texto);
+}
+.footer-mil-sabores a:hover, .footer-mil-sabores .fs-4:hover {
+    color: var(--color-acento-1);
+}
+
+a.card-link, a.card-link:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+.imagen-cuadrada {
+    width: 500px;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

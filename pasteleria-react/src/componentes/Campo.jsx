@@ -1,16 +1,46 @@
-// Campo de formulario: etiqueta + control + mensaje de error (el mismo HTML de los formularios originales).
-// error: texto del mensaje, o true para usar el mensaje por defecto (prop "mensaje").
-export default function Campo({ id, etiqueta, componente = "input", clase = "mb-3", error, mensaje, children, ...props }) {
-  const Control = componente;                       // "input", "textarea" o "select"
-  const base = componente === "select" ? "form-select" : "form-control";
+export default function Campo({
+  id,
+  etiqueta,
+  type = "text",
+  required = false,
+  value,
+  onChange,
+  error,
+  mensaje,
+  componente = "input",
+  clase = "mb-3",
+  children,
+  ...props
+}) {
+  const ComponenteRender = componente;
+  const tieneError = Boolean(error);
+
+  // Si 'error' es un string (un mensaje personalizado), lo muestra.
+  // De lo contrario, muestra el 'mensaje' que se le pasó por prop.
+  const mensajeFinal = typeof error === "string" ? error : mensaje;
 
   return (
     <div className={clase}>
-      <label htmlFor={id} className="form-label">{etiqueta}</label>
-      <Control id={id} name={id} className={base + (error ? " is-invalid" : "")} {...props}>
+      <label htmlFor={id} className="form-label">
+        {etiqueta}
+      </label>
+      <ComponenteRender
+        id={id}
+        name={id}
+        type={type}
+        required={required}
+        value={value}
+        onChange={onChange}
+        className={`form-control ${tieneError ? "is-invalid" : ""}`}
+        {...props}
+      >
         {children}
-      </Control>
-      {mensaje && <div className="invalid-feedback">{typeof error === "string" ? error : mensaje}</div>}
+      </ComponenteRender>
+      {tieneError && mensajeFinal && (
+        <div className="invalid-feedback">
+          {mensajeFinal}
+        </div>
+      )}
     </div>
   );
 }

@@ -17,7 +17,7 @@ export default function Registro() {
   const [form, setForm] = useState(formVacio);
   const [errores, setErrores] = useState({});
   const navigate = useNavigate();
-  const { state } = useLocation();   // si venías del carrito, se mantiene para volver después del login
+  const { state } = useLocation();
 
   const cambiar = (e) => {
     const { name, value } = e.target;
@@ -27,13 +27,10 @@ export default function Registro() {
   const registrar = (event) => {
     event.preventDefault();
 
-    // Los usuarios registrados desde la tienda se guardan en la MISMA
-    // lista que usa el panel de administrador ("usuariosAdmin"), para
-    // que aparezcan en el mantenedor de usuarios y puedan iniciar sesión.
     const usuarios = JSON.parse(localStorage.getItem('usuariosAdmin')) || [];
     const nuevos = {};
 
-    // Run: requerido, válido, sin puntos ni guion, 7 a 9 caracteres.
+    // Validar RUN
     const runLimpio = form.run.trim().toUpperCase();
     if (runLimpio.length < 7 || runLimpio.length > 9 || !validarRun(runLimpio)) {
       nuevos.run = 'Ingresa un run válido (7 a 9 caracteres, sin puntos ni guion).';
@@ -43,10 +40,14 @@ export default function Registro() {
 
     if (form.nombre.trim().length === 0) nuevos.nombre = true;
 
-    const emailRegex = /@(duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/;
-    if (!emailRegex.test(form.email)) {
+    // Normalizar correos a minúsculas
+    const emailLimpio = form.email.trim().toLowerCase();
+    const confirmarEmailLimpio = form.confirmarEmail.trim().toLowerCase();
+
+    const emailRegex = /@(duoc\.cl|profesor\.duoc\.cl|gmail\.com)$/i;
+    if (!emailRegex.test(emailLimpio)) {
       nuevos.email = "Solo se permiten correos @duoc.cl, @profesor.duoc.cl o @gmail.com.";
-    } else if (usuarios.some(u => u.correo.toLowerCase() === form.email.toLowerCase())) {
+    } else if (usuarios.some(u => (u.correo || u.email || '').toLowerCase() === emailLimpio)) {
       nuevos.email = "Ya existe una cuenta registrada con este correo.";
     }
 
@@ -57,13 +58,11 @@ export default function Registro() {
     setErrores(nuevos);
     if (Object.keys(nuevos).length > 0) return;
 
-    // Guardamos el nuevo usuario (queda visible también en el
-    // mantenedor de usuarios del panel de administración).
     guardarUsuariosAdmin([...usuarios, {
       run: runLimpio,
       nombre: form.nombre.trim(),
       apellidos: '',
-      correo: form.email.trim(),
+      correo: emailLimpio,
       password: form.password,
       telefono: form.telefono.trim(),
       fechaNacimiento: '',
@@ -81,7 +80,6 @@ export default function Registro() {
     <main className="container my-5">
       <div className="row">
         <div className="col-lg-8 col-xl-6 mx-auto">
-
           <div className="card p-4 shadow-sm border-0">
             <div className="card-body">
               <div className="text-center mb-4">
@@ -89,7 +87,6 @@ export default function Registro() {
               </div>
 
               <form noValidate onSubmit={registrar}>
-
                 <Campo id="run" etiqueta="Run (sin puntos ni guion, ej: 19011022K)" type="text" minLength="7" maxLength="9" required
                   value={form.run} onChange={cambiar} error={errores.run}
                   mensaje="Ingresa un run válido (7 a 9 caracteres, sin puntos ni guion)." />
@@ -139,7 +136,6 @@ export default function Registro() {
                 <div className="d-grid mt-4">
                   <button type="submit" className="btn btn-primary btn-lg">Registrar</button>
                 </div>
-
               </form>
             </div>
           </div>
